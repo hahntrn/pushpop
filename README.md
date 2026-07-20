@@ -67,9 +67,9 @@ There could be a command-line interface.
 
 ## Implementation
 
-Well I've done the hard part, thinking it up and making mockups. Implementation is left as exercise for the reader. I suggest [electron](http://electron.atom.io/). Send me a pull request when you're done.
+This repository now contains a native SwiftUI macOS implementation. Open `pushpop.xcodeproj` in Xcode 15 or later and press **Cmd+R** to build and run. Dependencies are handled by Swift Package Manager so no `npm install` step is needed.
 
-If the stack was stored in the cloud then you could also have iOS/android version for managing your mental stack while on the move.
+The menu bar icon toggles the floating window. Tasks and history are stored in `~/Library/Application Support/pushpop/stack.json` and planned for optional iCloud sync.
 
 ## Last thing
 
