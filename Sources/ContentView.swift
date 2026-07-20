@@ -3,57 +3,70 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var store: StackStore
     @State private var newTask: String = ""
-
-    var body: some View {
-        VStack {
-            HStack {
-                TextField("New Task", text: $newTask)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .accessibilityLabel(Text("Task field"))
-                Button("Push") { push() }
-                    .keyboardShortcut("p", modifiers: .command)
-                    .accessibilityLabel(Text("Push task"))
-                Button("Pop") { store.pop() }
-                    .keyboardShortcut("o", modifiers: .command)
-                    .accessibilityLabel(Text("Pop task"))
-            }
-            if let top = store.peekAll().last {
-                Text(top)
-                    .font(.title2)
-                    .padding()
-            } else {
-                Text("Stack is empty")
-                    .padding()
-            }
-            HStack {
-                Button("Peek") { showingPeek.toggle() }
-                    .keyboardShortcut("k", modifiers: .command)
-                Button("History") { showingHistory.toggle() }
-                    .keyboardShortcut("h", modifiers: .command)
-            }
-        }
-        .padding()
-        .sheet(isPresented: $showingPeek) {
-            PeekView()
-                .environmentObject(store)
-        }
-        .sheet(isPresented: $showingHistory) {
-            HistoryView()
-                .environmentObject(store)
-        }
-        .frame(minWidth: 300)
-    }
-
     @State private var showingPeek = false
     @State private var showingHistory = false
 
+    var body: some View {
+        VStack(spacing: 12) {
+            HStack {
+                TextField("New task", text: $newTask)
+                    .textFieldStyle(.roundedBorder)
+                    .onSubmit(push)
+                    .accessibilityLabel(Text("Task field"))
+                Button("Push", action: push)
+                    .disabled(newTask.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .accessibilityLabel(Text("Push task"))
+                Button("Pop") { store.pop() }
+                    .disabled(store.stack.isEmpty)
+                    .keyboardShortcut(.delete, modifiers: .command)
+                    .accessibilityLabel(Text("Pop task"))
+            }
+
+            if let top = store.top {
+                Text(top.text)
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityLabel(Text("Top of stack: \(top.text)"))
+            } else {
+                Text("Stack is empty")
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity)
+            }
+
+            if let problem = store.problem {
+                Text(problem)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+            }
+
+            HStack {
+                Button("Peek…") { showingPeek = true }
+                    .keyboardShortcut("e", modifiers: .command)
+                Button("History…") { showingHistory = true }
+                    .keyboardShortcut("y", modifiers: .command)
+                Spacer()
+                Text("\(store.stack.count) on stack")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding()
+        .frame(minWidth: 340)
+        .sheet(isPresented: $showingPeek) {
+            PeekView().environmentObject(store)
+        }
+        .sheet(isPresented: $showingHistory) {
+            HistoryView().environmentObject(store)
+        }
+    }
+
     private func push() {
-        guard !newTask.trimmingCharacters(in: .whitespaces).isEmpty else { return }
         store.push(newTask)
         newTask = ""
     }
 }
 
 #Preview {
-    ContentView().environmentObject(StackStore())
+    ContentView().environmentObject(StackStore.preview())
 }

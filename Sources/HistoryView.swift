@@ -6,23 +6,33 @@ struct HistoryView: View {
 
     var body: some View {
         NavigationStack {
-            List(store.history, id: \.0) { item in
-                VStack(alignment: .leading) {
-                    Text(item.0)
-                    Text(item.1.formatted())
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            Group {
+                if store.history.isEmpty {
+                    ContentUnavailableView("Nothing completed yet", systemImage: "checkmark.circle")
+                } else {
+                    List(store.history) { item in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(item.text)
+                            Text(item.completedAt.formatted(date: .abbreviated, time: .shortened))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
             }
             .navigationTitle("History")
             .toolbar {
-                Button("Done") { dismiss() }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") { dismiss() }
+                }
             }
         }
-        .frame(minWidth: 300, minHeight: 400)
+        .frame(minWidth: 380, minHeight: 420)
     }
 }
 
 #Preview {
-    HistoryView().environmentObject(StackStore())
+    let store = StackStore.preview()
+    store.pop()
+    return HistoryView().environmentObject(store)
 }

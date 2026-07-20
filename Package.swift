@@ -1,14 +1,17 @@
 // swift-tools-version: 6.1
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// Secondary target: a fast `swift build` compile check. The shipping app is
+// built from pushpop.xcodeproj, which is what produces the .app bundle.
 
 import PackageDescription
 
 let package = Package(
     name: "pushpop",
+    platforms: [.macOS(.v14)],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .executableTarget(
-            name: "pushpop"),
+            name: "pushpop",
+            exclude: ["Info.plist"],
+            resources: [.process("Assets.xcassets")]
+        ),
     ]
 )

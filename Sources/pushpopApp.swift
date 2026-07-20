@@ -11,42 +11,44 @@ struct pushpopApp: App {
             ContentView()
                 .environmentObject(store)
         }
-        .windowStyle(.utility)
-        .windowLevel(.floating)
-        .defaultSize(width: 400, height: 200)
-        .commands {
-            CommandMenu("Window") {
-                Button("Toggle Window") { appDelegate.toggleWindow() }
-                    .keyboardShortcut("t")
-            }
-        }
+        .defaultSize(width: 400, height: 220)
     }
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate {
-    var window: NSWindow?
-    var statusItem: NSStatusItem?
+@MainActor
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    private var statusItem: NSStatusItem?
+
+    /// Resolved on demand: the SwiftUI window does not reliably exist yet when
+    /// the status item is built, and holding a stale reference breaks toggling.
+    private var mainWindow: NSWindow? {
+        NSApp.windows.first { $0.canBecomeMain && !($0 is NSPanel) }
+    }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        if let window = NSApplication.shared.windows.first {
-            self.window = window
+        if let window = mainWindow {
             window.isReleasedWhenClosed = false
+            window.level = .floating  // macOS 14 has no SwiftUI .windowLevel modifier
             window.orderFrontRegardless()
         }
         setupStatusItem()
     }
 
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false  // closing the window leaves the menu bar item to bring it back
+    }
+
     private func setupStatusItem() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        if let button = statusItem?.button {
-            button.image = NSImage(systemSymbolName: "arrow.up.arrow.down.circle", accessibilityDescription: "pushpop")
-            button.action = #selector(toggleWindow)
-            button.target = self
-        }
+        guard let button = statusItem?.button else { return }
+        button.image = NSImage(systemSymbolName: "arrow.up.arrow.down.circle",
+                               accessibilityDescription: "pushpop")
+        button.action = #selector(toggleWindow)
+        button.target = self
     }
 
     @objc func toggleWindow() {
-        guard let window = window else { return }
+        guard let window = mainWindow else { return }
         if window.isVisible {
             window.orderOut(nil)
         } else {

@@ -12,14 +12,11 @@
 		84B17DE137B94BA0C85796D1 /* StackStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB27184D24EF00D85A04FB7 /* StackStore.swift */; };
 		B47F1F531ABD1A80BFF29778 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 135745A16C5976AD12D004B9 /* Assets.xcassets */; };
 		D74438CF4E17A925037A310E /* pushpopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585942E184C8D4A846ED533C /* pushpopApp.swift */; };
-		E166E087947676A7BC91D750 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351CD96A762460AE4602E857 /* Cocoa.framework */; };
 		E615796E5F2A71081893F1DB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C3F8BB7359481E0E20E6C /* HistoryView.swift */; };
-		FF760C8B656184C5CC715ACF /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = BB73B46A2914EA8A368DE94B /* pop.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		135745A16C5976AD12D004B9 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Sources/Assets.xcassets; sourceTree = "<group>"; };
-		351CD96A762460AE4602E857 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		3A4C3F8BB7359481E0E20E6C /* HistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HistoryView.swift; path = Sources/HistoryView.swift; sourceTree = "<group>"; };
 		42E73C5A8B7070E398CB2CF3 /* PeekView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PeekView.swift; path = Sources/PeekView.swift; sourceTree = "<group>"; };
 		456208FA5B3A60B18AE8E724 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = Sources/ContentView.swift; sourceTree = "<group>"; };
@@ -27,7 +24,6 @@
 		585942E184C8D4A846ED533C /* pushpopApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = pushpopApp.swift; path = Sources/pushpopApp.swift; sourceTree = "<group>"; };
 		7BB27184D24EF00D85A04FB7 /* StackStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StackStore.swift; path = Sources/StackStore.swift; sourceTree = "<group>"; };
 		8DDE2FCD738047EBE28C6852 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sources/Info.plist; sourceTree = "<group>"; };
-		BB73B46A2914EA8A368DE94B /* pop.wav */ = {isa = PBXFileReference; includeInIndex = 1; name = pop.wav; path = Sources/Resources/pop.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E166E087947676A7BC91D750 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,18 +55,8 @@
 				3A4C3F8BB7359481E0E20E6C /* HistoryView.swift */,
 				8DDE2FCD738047EBE28C6852 /* Info.plist */,
 				135745A16C5976AD12D004B9 /* Assets.xcassets */,
-				BB73B46A2914EA8A368DE94B /* pop.wav */,
 			);
 			name = pushpop;
-			path = pushpop;
-			sourceTree = "<group>";
-		};
-		A4DD991208DA8E03EE8A8E5D /* OS X */ = {
-			isa = PBXGroup;
-			children = (
-				351CD96A762460AE4602E857 /* Cocoa.framework */,
-			);
-			name = "OS X";
 			sourceTree = "<group>";
 		};
 		A5D4F5C63F6F99138CB4410F = {
@@ -86,7 +71,6 @@
 		DD596520932BE2F269991207 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A4DD991208DA8E03EE8A8E5D /* OS X */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -144,7 +128,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B47F1F531ABD1A80BFF29778 /* Assets.xcassets in Resources */,
-				FF760C8B656184C5CC715ACF /* pop.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
